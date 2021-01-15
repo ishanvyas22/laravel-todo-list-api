@@ -94,6 +94,12 @@ class TaskController extends Controller
             ->when($request->query('due_date'), function ($query, $due) {
                 if ($due === 'today') {
                     return $query->where('due_date', Carbon::today());
+                } elseif ($due === 'this_week') {
+                    return $query->whereBetween('due_date', [now()->startOfWeek(), now()->endOfWeek()]);
+                } elseif ($due === 'next_week') {
+                    return $query->whereBetween('due_date', [now()->addDays(7)->startOfWeek(), now()->addDays(7)->endOfWeek()]);
+                } elseif ($due === 'overdue') {
+                    return $query->where('due_date', '<', now());
                 }
 
                 return $query;
