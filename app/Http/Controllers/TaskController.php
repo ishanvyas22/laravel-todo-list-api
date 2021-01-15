@@ -43,4 +43,21 @@ class TaskController extends Controller
 
         return $this->setSuccessResponse($tasks->toArray());
     }
+
+    /**
+     * Marks a task or a subtask complete.
+     *
+     * @param  Request  $request
+     * @return Response
+     */
+    public function complete(Request $request)
+    {
+        $task = Task::findOrFail($request->task_id);
+
+        $task->status = true;
+
+        $task->save();
+
+        return $this->setSuccessResponse(['message' => 'Task has been completed.']);
+    }
 }

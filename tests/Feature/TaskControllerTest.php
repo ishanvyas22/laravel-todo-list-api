@@ -107,4 +107,27 @@ class TaskControllerTest extends TestCase
             ])
             ->assertJsonPath('total', 1);
     }
+
+    /** @test */
+    public function a_user_can_mark_a_task_complete()
+    {
+        $this->withoutExceptionHandling();
+
+        $task = Task::factory()->create([
+            'title' => 'Go to the store',
+            'due_date' => now()->add(1, 'day')->format('Y-m-d'),
+            'status' => false,
+        ]);
+
+        $response = $this->putJson('/api/tasks/complete', ['task_id' => $task->id]);
+
+        $response->assertStatus(200)->assertJson([
+            'success' => true,
+        ]);
+        $this->assertDatabaseHas('tasks', [
+            'title' => 'Go to the store',
+            'due_date' => now()->add(1, 'day')->format('Y-m-d'),
+            'status' => true,
+        ]);
+    }
 }
