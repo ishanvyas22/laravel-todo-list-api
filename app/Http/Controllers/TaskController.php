@@ -74,4 +74,25 @@ class TaskController extends Controller
 
         return $this->setSuccessResponse([], 204);
     }
+
+    /**
+     * Filter tasks by title.
+     *
+     * @param  Request  $request
+     * @return Response
+     */
+    public function filter(Request $request)
+    {
+        $tasks = Task::with('subtasks')
+            ->where([
+                'parent_id' => null,
+            ])
+            ->when($request->query('title'), function ($query, $title) {
+                return $query->where('title', 'like', "%{$title}%");
+            })
+            ->orderBy('due_date')
+            ->paginate(15);
+
+        return $this->setSuccessResponse($tasks->toArray());
+    }
 }

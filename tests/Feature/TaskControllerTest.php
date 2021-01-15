@@ -152,4 +152,30 @@ class TaskControllerTest extends TestCase
             'deleted_at' => now(),
         ]);
     }
+
+    /** @test */
+    public function a_user_can_search_tasks_by_title()
+    {
+        $this->withoutExceptionHandling();
+
+        Task::factory()->create([
+            'title' => 'Go to the store',
+            'due_date' => now()->add(1, 'day')->format('Y-m-d'),
+            'status' => true,
+        ]);
+        Task::factory()->create([
+            'title' => 'Clean up room',
+            'due_date' => now()->add(1, 'day')->format('Y-m-d'),
+            'status' => true,
+        ]);
+        Task::factory()->create([
+            'title' => 'Clean up garage',
+            'due_date' => now()->add(1, 'day')->format('Y-m-d'),
+            'status' => true,
+        ]);
+
+        $response = $this->getJson('/api/tasks/filter?title=Clean');
+
+        $response->assertStatus(200)->assertJsonPath('total', 2);
+    }
 }
