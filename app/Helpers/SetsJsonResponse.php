@@ -15,7 +15,7 @@ trait SetsJsonResponse
      * @param  int  $statusCode
      * @return Response
      */
-    public function setSuccessResponse($data, $statusCode = 200)
+    public function setSuccessResponse($data = [], $statusCode = 200)
     {
         return $this->setJsonResponse(array_merge($data, ['success' => true]), $statusCode);
     }

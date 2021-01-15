@@ -130,4 +130,26 @@ class TaskControllerTest extends TestCase
             'status' => true,
         ]);
     }
+
+    /** @test */
+    public function a_user_can_delete_a_task()
+    {
+        $this->withoutExceptionHandling();
+
+        $task = Task::factory()->create([
+            'title' => 'Go to the store',
+            'due_date' => now()->add(1, 'day')->format('Y-m-d'),
+            'status' => true,
+        ]);
+
+        $response = $this->deleteJson("/api/tasks/{$task->id}");
+
+        $response->assertStatus(204);
+        $this->assertDatabaseHas('tasks', [
+            'title' => 'Go to the store',
+            'due_date' => now()->add(1, 'day')->format('Y-m-d'),
+            'status' => true,
+            'deleted_at' => now(),
+        ]);
+    }
 }
