@@ -14,5 +14,5 @@ class Task extends Model
      *
      * @var array
      */
-    protected $fillable = ['title', 'due_date'];
+    protected $fillable = ['parent_id', 'title', 'due_date'];
 }

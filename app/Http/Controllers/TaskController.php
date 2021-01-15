@@ -19,6 +19,7 @@ class TaskController extends Controller
     public function store(Request $request)
     {
         $task = Task::create([
+            'parent_id' => $request->parent_id,
             'title' => $request->title,
             'due_date' => $request->due_date,
         ]);
