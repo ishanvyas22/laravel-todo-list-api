@@ -4,11 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Helpers\SetsJsonResponse;
 use App\Models\Task;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Http\Request;
 
 class TaskController extends Controller
 {
-    use SetsJsonResponse;
+    use SoftDeletes, SetsJsonResponse;
 
     /**
      * Store a new task or subtask.
@@ -24,9 +25,22 @@ class TaskController extends Controller
             'due_date' => $request->due_date,
         ]);
 
-        return $this->setSuccessResponse([
-            'success' => true,
-            'task' => $task->toArray(),
-        ], 201);
+        return $this->setSuccessResponse($task->toArray(), 201);
+    }
+
+    /**
+     * Lists all the tasks along with subtasks.
+     *
+     * @return Response
+     */
+    public function index()
+    {
+        $tasks = Task::with('subtasks')->where([
+            'status' => false,
+            'parent_id' => null,
+            'deleted_at' => null,
+        ])->orderBy('due_date')->paginate(15);
+
+        return $this->setSuccessResponse($tasks->toArray());
     }
 }
