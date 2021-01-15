@@ -178,4 +178,30 @@ class TaskControllerTest extends TestCase
 
         $response->assertStatus(200)->assertJsonPath('total', 2);
     }
+
+    /** @test */
+    public function a_user_can_filter_tasks_which_due_today()
+    {
+        $this->withoutExceptionHandling();
+
+        Task::factory()->create([
+            'title' => 'Go to the store',
+            'due_date' => now()->format('Y-m-d'),
+            'status' => true,
+        ]);
+        Task::factory()->create([
+            'title' => 'Clean up room',
+            'due_date' => now()->add(1, 'day')->format('Y-m-d'),
+            'status' => true,
+        ]);
+        Task::factory()->create([
+            'title' => 'Clean up garage',
+            'due_date' => now()->add(1, 'day')->format('Y-m-d'),
+            'status' => true,
+        ]);
+
+        $response = $this->getJson('/api/tasks/filter?due_date=today');
+
+        $response->assertStatus(200)->assertJsonPath('total', 1);
+    }
 }

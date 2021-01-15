@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Helpers\SetsJsonResponse;
 use App\Models\Task;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class TaskController extends Controller
@@ -89,6 +90,13 @@ class TaskController extends Controller
             ])
             ->when($request->query('title'), function ($query, $title) {
                 return $query->where('title', 'like', "%{$title}%");
+            })
+            ->when($request->query('due_date'), function ($query, $due) {
+                if ($due === 'today') {
+                    return $query->where('due_date', Carbon::today());
+                }
+
+                return $query;
             })
             ->orderBy('due_date')
             ->paginate(15);
