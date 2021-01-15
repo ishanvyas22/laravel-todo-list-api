@@ -91,15 +91,7 @@ class TaskControllerTest extends TestCase
                         'status',
                         'created_at',
                         'updated_at',
-                        'subtasks' => [
-                            [
-                                'title',
-                                'due_date',
-                                'status',
-                                'created_at',
-                                'updated_at',
-                            ],
-                        ],
+                        'subtasks' => [],
                     ],
                 ],
                 'first_page_url',
