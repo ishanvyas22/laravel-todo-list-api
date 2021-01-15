@@ -14,8 +14,6 @@ class TaskControllerTest extends TestCase
     /** @test */
     public function a_user_can_create_a_task()
     {
-        $this->withoutExceptionHandling();
-
         $response = $this->postJson('/api/tasks', [
             'title' => 'Go to the store',
             'due_date' => '2021-01-25',
@@ -36,8 +34,6 @@ class TaskControllerTest extends TestCase
     /** @test */
     public function a_user_can_create_a_subtask()
     {
-        $this->withoutExceptionHandling();
-
         $task = Task::factory()->create();
 
         $response = $this->postJson('/api/tasks', [
@@ -61,8 +57,6 @@ class TaskControllerTest extends TestCase
     /** @test */
     public function a_user_can_view_list_of_pending_tasks_along_with_its_subtasks()
     {
-        $this->withoutExceptionHandling();
-
         $task = Task::factory()->create([
             'title' => 'Go to the store',
             'due_date' => now()->add(1, 'day')->format('Y-m-d'),
@@ -112,8 +106,6 @@ class TaskControllerTest extends TestCase
     /** @test */
     public function a_user_can_mark_a_task_complete()
     {
-        $this->withoutExceptionHandling();
-
         $task = Task::factory()->create([
             'title' => 'Go to the store',
             'due_date' => now()->add(1, 'day')->format('Y-m-d'),
@@ -135,8 +127,6 @@ class TaskControllerTest extends TestCase
     /** @test */
     public function a_user_can_delete_a_task()
     {
-        $this->withoutExceptionHandling();
-
         $task = Task::factory()->create([
             'title' => 'Go to the store',
             'due_date' => now()->add(1, 'day')->format('Y-m-d'),
@@ -157,8 +147,6 @@ class TaskControllerTest extends TestCase
     /** @test */
     public function a_user_can_search_tasks_by_title()
     {
-        $this->withoutExceptionHandling();
-
         Task::factory()->create([
             'title' => 'Go to the store',
             'due_date' => now()->add(1, 'day')->format('Y-m-d'),
@@ -183,8 +171,6 @@ class TaskControllerTest extends TestCase
     /** @test */
     public function a_user_can_filter_tasks_which_due_today()
     {
-        $this->withoutExceptionHandling();
-
         Task::factory()->create([
             'title' => 'Go to the store',
             'due_date' => now()->format('Y-m-d'),
@@ -209,8 +195,6 @@ class TaskControllerTest extends TestCase
     /** @test */
     public function a_user_can_filter_tasks_which_is_due_this_week()
     {
-        $this->withoutExceptionHandling();
-
         Task::factory()->create([
             'title' => 'Go to the store',
             'due_date' => now()->add(1, 'day')->format('Y-m-d'),
@@ -235,8 +219,6 @@ class TaskControllerTest extends TestCase
     /** @test */
     public function a_user_can_filter_tasks_which_is_due_next_week()
     {
-        $this->withoutExceptionHandling();
-
         Task::factory()->create([
             'title' => 'Go to the store',
             'due_date' => now()->add(1, 'day')->format('Y-m-d'),
@@ -261,8 +243,6 @@ class TaskControllerTest extends TestCase
     /** @test */
     public function a_user_can_filter_tasks_which_is_overdue()
     {
-        $this->withoutExceptionHandling();
-
         Task::factory()->create([
             'title' => 'Go to the store',
             'due_date' => now()->add(1, 'day')->format('Y-m-d'),
