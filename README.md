@@ -20,7 +20,6 @@ A simple API to manage todo lists built with Laravel.
 
 ### Follow me
 - [GitHub](https://github.com/ishanvyas22)
-- [Instagram](https://www.instagram.com/ishancodes)
 - [LinkedIn](https://www.linkedin.com/in/ishan-vyas-314111112)
 - [Twitter](https://twitter.com/ishanvyas22)
 
